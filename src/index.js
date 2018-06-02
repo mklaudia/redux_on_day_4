@@ -2,9 +2,11 @@ import { createStore } from "redux";
 
 //state: the application state
 const reducer = function(state, action) {
-  if(action.type==='INC'){
-    console.log("Store: ", store.getState());
-    return state + 1;
+  switch (action.type) {
+    case "INC":
+      return state + 1;
+    case "DEC":
+      return state + 1;
   }
   return state;
 };
@@ -17,3 +19,4 @@ store.subscribe(() => {
 
 //this is
 store.dispatch({ type: "INC" });
+store.dispatch({ type: "DEC" });
