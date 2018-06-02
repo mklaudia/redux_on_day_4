@@ -1,59 +1,22 @@
 //if wanna use more stores, then we need to combine them..
-import { combineReducers, createStore } from "redux";
-
-const initialState = {
-  user: null,
-  tweets: []
-};
+import { applyMiddleware, createStore } from "redux";
 
 //state: the application state
-const userReducer = function(state = initialState.user, action) {
+const reducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_NAME": {
-      return { ...state, ...action.myPayload };
-    }
-    case "CHANGE_AGE": {
-      return { ...state, ...action.payload };
+    case "INC": {
+      return (state = +1);
     }
     default:
       return state;
   }
 };
 
-const tweetsReducer = function(state = initialState.tweets, action) {
-  switch (action.type) {
-    case "SHOW_TWEETS": {
-      return [...state, ...action.payload];
-    }
-    default:
-      return state;
-  }
-  return state;
-};
-
-//combine them
-const reducers = combineReducers({
-  user: userReducer,
-  tweets: tweetsReducer
-});
-
-const store = createStore(reducers);
+const store = createStore(reducer);
 
 store.subscribe(() => {
   console.log("Store change: ", store.getState());
 });
 
 //this does nothing yet as nothing is listening
-store.dispatch({ type: "CHANGE_NAME", myPayload: { user: "Adam" } });
-store.dispatch({ type: "CHANGE_AGE", myPayload: { age: 99 } });
-store.dispatch({
-  type: "SHOW_TWEETS",
-  payload: ["Hello World", "I tweet.", "Redux playa"]
-});
-store.dispatch({
-  type: "SHOW_TWEETS",
-  payload: ["Hello World", "Redux playa", "Wow"]
-});
-
-//you may put actions to tweets.js and user to user.js so this case
-// we may only import the relevant actions that  we need in our app
+store.dispatch({ type: "INC" });
