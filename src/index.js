@@ -2,6 +2,10 @@ import { createStore } from "redux";
 
 //state: the application state
 const reducer = function(state, action) {
+  if(action.type==='INC'){
+    console.log("Store: ", store.getState());
+    return state + 1;
+  }
   return state;
 };
 
