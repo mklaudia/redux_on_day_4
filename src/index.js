@@ -11,6 +11,8 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  console.log(action.type);
+
   switch (action.type) {
     case "FETCH_POSTS_PENDING":
       return {
@@ -32,24 +34,26 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-const middleware = applyMiddleware(promise());
+const middleware = applyMiddleware(thunk, promise());
 
 const store = createStore(reducer, middleware);
 
 store.subscribe(() => {
   console.log("store change", store.getState());
 });
-/*
-store.dispatch((dispatch) => {
-  dispatch({ type: 'FETCH_POSTS_PENDING' })
-  axios.get('https://jsonplaceholder.typicode.com/posts')
-  .then(response => {
-    dispatch({ type: 'FETCH_POSTS_FULFILLED', payload: response.data })
-  }).catch(error => {
-    dispatch({ type: 'FETCH_POSTS_REJECTED', payload: error })
-  })
+
+store.dispatch(dispatch => {
+  dispatch({ type: "FETCH_POSTS_PENDING" });
+  axios
+    .get("https://jsonplaceholder.typicode.com/posts")
+    .then(response => {
+      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response.data });
+    })
+    .catch(error => {
+      dispatch({ type: "FETCH_POSTS_REJECTED", payload: error });
+    });
 });
-*/
+
 store.dispatch({
   type: "FETCH_POSTS",
   payload: axios.get("https://jsonplaceholder.typicode.com/posts")
