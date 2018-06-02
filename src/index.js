@@ -12,6 +12,9 @@ const userReducer = function(state = initialState.user, action) {
     case "CHANGE_NAME": {
       return { ...state, ...action.payload };
     }
+    case "CHANGE_AGE": {
+      return { ...state, ...action.payload };
+    }
     default:
       return state;
   }
@@ -35,3 +38,4 @@ store.subscribe(() => {
 
 //this does nothing yet as nothing is listening
 store.dispatch({ type: "CHANGE_NAME", payload: { user: "Adam" } });
+store.dispatch({ type: "CHANGE_AGE", payload: { age: 99 } });
