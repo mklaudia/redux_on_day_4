@@ -8,9 +8,15 @@ const initialState = {
 
 //state: the application state
 const userReducer = function(state = initialState.user, action) {
-  //inital state is a must
-  return state;
+  switch (action.type) {
+    case "CHANGE_NAME": {
+      return { ...state, ...action.payload };
+    }
+    default:
+      return state;
+  }
 };
+
 const tweetsReducer = function(state = initialState.tweets, action) {
   return state;
 };
@@ -28,4 +34,4 @@ store.subscribe(() => {
 });
 
 //this does nothing yet as nothing is listening
-store.dispatch({ type: "CHANGENAME", payload: "Adam" });
+store.dispatch({ type: "CHANGE_NAME", payload: { user: "Adam" } });
