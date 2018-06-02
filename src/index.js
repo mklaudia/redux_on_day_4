@@ -1,17 +1,22 @@
-import { createStore } from "redux";
+//if wanna use more stores, then we need to combine them..
+import { combineReducers, createStore } from "redux";
 
 //state: the application state
-const reducer = function(state, action) {
-  switch (action.type) {
-    case "INC":
-      return state + action.payload;
-    case "DEC":
-      return state + action.payload;
-  }
+const userReducer = function(state = {}, action) {
+  //inital state is a must
+  return state;
+};
+const tweetsReducer = function(state = {}, action) {
   return state;
 };
 
-const store = createStore(reducer, 0); //0 is the inital state
+//combine them
+const reducers = combineReducers({
+  user: userReducer,
+  tweets: tweetsReducer
+});
+
+const store = createStore(reducers);
 
 store.subscribe(() => {
   console.log("Store change: ", store.getState());
