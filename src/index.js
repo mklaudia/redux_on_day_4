@@ -1,44 +1,26 @@
-//if wanna use more stores, then we need to combine them..
 import { applyMiddleware, createStore } from "redux";
 
-//state: the application state
 const reducer = (state, action) => {
   switch (action.type) {
-    case "INC": {
-      return (state = +1);
-    }
-    case "E": {
-      throw new Error("ouch");
-    }
-    default:
-      return state;
+    case "INC":
+      return state + action.payload;
   }
+  return state;
 };
-/*
-//pass store, to function next to action
-const logger = store => next => action => {
-  console.log = ("action fired", action);
+
+const overWriter = store => next => action => {
+  action.payload = 1;
   next(action);
 };
-*/
 
-const error = store => next => action => {
-  try {
-    console.log = ("action fired", action);
-    next(action);
-  } catch (e) {
-    console.log = ("Error, ", e);
-  }
-};
-
-const middleware = applyMiddleware(error);
+const middleware = applyMiddleware(overWriter);
 
 const store = createStore(reducer, null, middleware);
 
 store.subscribe(() => {
-  console.log("Store change: ", store.getState());
+  console.log("store change", store.getState());
 });
 
-//this does nothing yet as nothing is listening
-store.dispatch({ type: "INC", payload: {} });
-store.dispatch({ type: "E" });
+store.dispatch({ type: "INC", payload: 2 });
+store.dispatch({ type: "INC", payload: 2 });
+store.dispatch({ type: "INC", payload: 2 });
