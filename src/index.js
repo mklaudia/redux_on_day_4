@@ -20,6 +20,8 @@ const reducer = (state = initialState, action) => {
         fetching: true
       };
 
+    case "GET_ANOTHER_STG":
+
     case "FETCH_POSTS_REJECTED":
       return { ...state, fetching: false, err: action.payload };
 
@@ -45,11 +47,9 @@ store.subscribe(() => {
 
 store.dispatch(dispatch => {
   dispatch({ type: "FETCH_POSTS_PENDING" });
-  axios
-    .get("https://jsonplaceholder.typicode.com/posts")
+  fetch("https://jsonplaceholder.typicode.com/posts", { method: "GET" })
     .then(response => {
-      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response });
-      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response });
+      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response.json() });
     })
     .catch(error => {
       dispatch({ type: "FETCH_POSTS_REJECTED", payload: error });
