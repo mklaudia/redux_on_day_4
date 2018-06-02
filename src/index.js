@@ -1,6 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import axios from "axios";
+import promise from "redux-promise-middleware";
 
 const initialState = {
   fetching: false,
@@ -12,39 +13,44 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "FETCH_POSTS_PENDING":
-      return { ...state, fetching: true };
+      return {
+        ...state,
+        fetching: true
+      };
+
     case "FETCH_POSTS_REJECTED":
       return { ...state, fetching: false, err: action.payload };
+
     case "FETCH_POSTS_FULFILLED":
       return {
         ...state,
         fetching: false,
         fetched: true,
-        posts: action.payload
+        posts: action.payload.data
       };
   }
-  console.log(action.type);
   return state;
 };
 
-const middleware = applyMiddleware(thunk);
+const middleware = applyMiddleware(promise());
 
 const store = createStore(reducer, middleware);
 
 store.subscribe(() => {
   console.log("store change", store.getState());
 });
-
-store.dispatch(dispatch => {
-  dispatch({ type: "FETCH_POSTS_PENDING" });
-  //do sg this is synchronous
-  axios
-    .get("https://jsonplaceholder.typicode.com/posts")
-    .then(respone => {
-      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response.data() });
-    })
-    .catch(error => {
-      dispatch({ type: "FETCH_POSTS_REJECTED", payload: error });
-    });
-  dispatch({ type: "END" });
+/*
+store.dispatch((dispatch) => {
+  dispatch({ type: 'FETCH_POSTS_PENDING' })
+  axios.get('https://jsonplaceholder.typicode.com/posts')
+  .then(response => {
+    dispatch({ type: 'FETCH_POSTS_FULFILLED', payload: response.data })
+  }).catch(error => {
+    dispatch({ type: 'FETCH_POSTS_REJECTED', payload: error })
+  })
+});
+*/
+store.dispatch({
+  type: "FETCH_POSTS",
+  payload: axios.get("https://jsonplaceholder.typicode.com/posts")
 });
