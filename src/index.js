@@ -27,8 +27,5 @@ store.subscribe(() => {
   console.log("Store change: ", store.getState());
 });
 
-//this is
-store.dispatch({ type: "INC", payload: 2 });
-store.dispatch({ type: "INC", payload: 5 });
-store.dispatch({ type: "INC", payload: 200 });
-store.dispatch({ type: "DEC", payload: -3 });
+//this does nothing yet as nothing is listening
+store.dispatch({ type: "CHANGENAME", payload: "Adam" });
