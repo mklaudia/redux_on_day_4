@@ -17,7 +17,7 @@ store.subscribe(() => {
 
 store.dispatch(dispatch => {
   dispatch({ type: "START" });
-  //do sg
+  //do sg this is synchronous
   //axion.get("https://jsonplaceholder.typicode.com/posts");
   dispatch({ type: "END" });
 });
