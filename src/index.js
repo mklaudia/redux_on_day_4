@@ -13,6 +13,15 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "FETCH_POSTS_PENDING":
       return { ...state, fetching: true };
+    case "FETCH_POSTS_REJECTED":
+      return { ...state, fetching: false, err: action.payload };
+    case "FETCH_POSTS_FULFILLED":
+      return {
+        ...state,
+        fetching: false,
+        fetched: true,
+        posts: action.payload
+      };
   }
   console.log(action.type);
   return state;
@@ -32,10 +41,10 @@ store.dispatch(dispatch => {
   axios
     .get("https://jsonplaceholder.typicode.com/posts")
     .then(respone => {
-      dispatch({ type: "FETCH_POSTS_FILTERED" });
+      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response.data() });
     })
     .catch(error => {
-      dispatch({ type: "FETCH_POSTS_REJECTED" });
+      dispatch({ type: "FETCH_POSTS_REJECTED", payload: error });
     });
   dispatch({ type: "END" });
 });
