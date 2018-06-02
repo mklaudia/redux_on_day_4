@@ -21,6 +21,13 @@ const userReducer = function(state = initialState.user, action) {
 };
 
 const tweetsReducer = function(state = initialState.tweets, action) {
+  switch (action.type) {
+    case "SHOW_TWEETS": {
+      return { ...state, ...action.payload };
+    }
+    default:
+      return state;
+  }
   return state;
 };
 
@@ -39,3 +46,11 @@ store.subscribe(() => {
 //this does nothing yet as nothing is listening
 store.dispatch({ type: "CHANGE_NAME", payload: { user: "Adam" } });
 store.dispatch({ type: "CHANGE_AGE", payload: { age: 99 } });
+store.dispatch({
+  type: "SHOW_TWEETS",
+  payload: ["Hello World", "I tweet.", "Redux playa"]
+});
+store.dispatch({
+  type: "SHOW_TWEETS",
+  payload: ["Hello World", "Redux playa", "Wow"]
+});
