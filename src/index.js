@@ -4,9 +4,9 @@ import { createStore } from "redux";
 const reducer = function(state, action) {
   switch (action.type) {
     case "INC":
-      return state + 1;
+      return state + action.payload;
     case "DEC":
-      return state + 1;
+      return state + action.payload;
   }
   return state;
 };
@@ -18,5 +18,5 @@ store.subscribe(() => {
 });
 
 //this is
-store.dispatch({ type: "INC" });
-store.dispatch({ type: "DEC" });
+store.dispatch({ type: "INC", payload: 2 });
+store.dispatch({ type: "DEC", payload: -3 });
