@@ -10,7 +10,7 @@ const initialState = {
 const userReducer = function(state = initialState.user, action) {
   switch (action.type) {
     case "CHANGE_NAME": {
-      return { ...state, ...action.payload };
+      return { ...state, ...action.myPayload };
     }
     case "CHANGE_AGE": {
       return { ...state, ...action.payload };
@@ -44,8 +44,8 @@ store.subscribe(() => {
 });
 
 //this does nothing yet as nothing is listening
-store.dispatch({ type: "CHANGE_NAME", payload: { user: "Adam" } });
-store.dispatch({ type: "CHANGE_AGE", payload: { age: 99 } });
+store.dispatch({ type: "CHANGE_NAME", myPayload: { user: "Adam" } });
+store.dispatch({ type: "CHANGE_AGE", myPayload: { age: 99 } });
 store.dispatch({
   type: "SHOW_TWEETS",
   payload: ["Hello World", "I tweet.", "Redux playa"]
