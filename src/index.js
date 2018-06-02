@@ -1,12 +1,17 @@
 //if wanna use more stores, then we need to combine them..
 import { combineReducers, createStore } from "redux";
 
+const initialState = {
+  user: null,
+  tweets: []
+};
+
 //state: the application state
-const userReducer = function(state = {}, action) {
+const userReducer = function(state = initialState.user, action) {
   //inital state is a must
   return state;
 };
-const tweetsReducer = function(state = {}, action) {
+const tweetsReducer = function(state = initialState.tweets, action) {
   return state;
 };
 
