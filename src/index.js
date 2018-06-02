@@ -23,7 +23,7 @@ const userReducer = function(state = initialState.user, action) {
 const tweetsReducer = function(state = initialState.tweets, action) {
   switch (action.type) {
     case "SHOW_TWEETS": {
-      return { ...state, ...action.payload };
+      return [...state, ...action.payload];
     }
     default:
       return state;
