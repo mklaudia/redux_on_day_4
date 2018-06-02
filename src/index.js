@@ -18,6 +18,13 @@ store.subscribe(() => {
 store.dispatch(dispatch => {
   dispatch({ type: "START" });
   //do sg this is synchronous
-  //axion.get("https://jsonplaceholder.typicode.com/posts");
+  axios
+    .get("https://jsonplaceholder.typicode.com/posts")
+    .then(respone => {
+      dispatch({ type: "AA" });
+    })
+    .catch(error => {
+      dispatch({ type: "ERROR" });
+    });
   dispatch({ type: "END" });
 });
