@@ -19,4 +19,6 @@ store.subscribe(() => {
 
 //this is
 store.dispatch({ type: "INC", payload: 2 });
+store.dispatch({ type: "INC", payload: 5 });
+store.dispatch({ type: "INC", payload: 200 });
 store.dispatch({ type: "DEC", payload: -3 });
