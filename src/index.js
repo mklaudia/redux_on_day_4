@@ -1,19 +1,13 @@
 import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import axios from "axios";
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "INC":
-      return state + action.payload;
-  }
+  console.log(action.type);
   return state;
 };
 
-const overWriter = store => next => action => {
-  action.payload = 1;
-  next(action);
-};
-
-const middleware = applyMiddleware(overWriter);
+const middleware = applyMiddleware(thunk);
 
 const store = createStore(reducer, null, middleware);
 
@@ -21,6 +15,9 @@ store.subscribe(() => {
   console.log("store change", store.getState());
 });
 
-store.dispatch({ type: "INC", payload: 2 });
-store.dispatch({ type: "INC", payload: 2 });
-store.dispatch({ type: "INC", payload: 2 });
+store.dispatch(dispatch => {
+  dispatch({ type: "START" });
+  //do sg
+  //axion.get("https://jsonplaceholder.typicode.com/posts");
+  dispatch({ type: "END" });
+});
