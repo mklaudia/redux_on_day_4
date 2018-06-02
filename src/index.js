@@ -54,3 +54,6 @@ store.dispatch({
   type: "SHOW_TWEETS",
   payload: ["Hello World", "Redux playa", "Wow"]
 });
+
+//you may put actions to tweets.js and user to user.js so this case
+// we may only import the relevant actions that  we need in our app
