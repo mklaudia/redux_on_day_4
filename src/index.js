@@ -24,11 +24,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, fetching: false, err: action.payload };
 
     case "FETCH_POSTS_FULFILLED":
+      const posts = action.payload.data.filter((post, index) => index < 10);
       return {
         ...state,
         fetching: false,
         fetched: true,
-        posts: action.payload.data
+        posts
       };
   }
   return state;
@@ -47,7 +48,8 @@ store.dispatch(dispatch => {
   axios
     .get("https://jsonplaceholder.typicode.com/posts")
     .then(response => {
-      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response.data });
+      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response });
+      dispatch({ type: "FETCH_POSTS_FULFILLED", payload: response });
     })
     .catch(error => {
       dispatch({ type: "FETCH_POSTS_REJECTED", payload: error });
